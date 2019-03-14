@@ -1,0 +1,126 @@
+package trabalho;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author wenderson e alexander
+ */
+public class Trabalho {
+    public static int[][] carregarGrafo(){
+        int matriz[][] = null;
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Digite o numero de vertices: ");
+        int vertices = scan.nextInt();
+        int[][] matrizAux = new int[vertices + 1][vertices + 1];
+        System.out.println("Digite a matriz de adjacencia do grafo");
+            for (int i = 0; i < vertices; i++) {
+                    for (int j = 0; j < vertices; j++) {
+                            int peso = scan.nextInt();
+                            if (i == j) {
+                                    matrizAux[i][j] = 0;
+                            } else {
+                                    matrizAux[i][j] = peso;
+                                    matrizAux[j][i] = matrizAux[i][j];
+                            }
+                    }
+            }
+        for (int i = 0; i < vertices; i++) {
+               for (int j = 0; j < vertices; j++) {
+                       System.out.print("[" + matrizAux[i][j] + "] " );
+                       }
+               System.out.println();
+               }
+        return matriz;
+    }
+
+    
+    public static int[][] carregarTxt(){
+        
+     int vertices =0;
+        try {
+               BufferedReader arquivo = new BufferedReader(new FileReader("entrada.txt"));
+                 Scanner scanner = new Scanner(arquivo);
+                while ((arquivo.readLine()) != null) {
+                        vertices++;
+                }
+        } catch (IOException e1) {
+                e1.printStackTrace();
+         }
+        int matriz[][];
+        matriz = new int[vertices][vertices];
+        Scanner entrada;
+        try{
+            entrada = new Scanner(new File("entrada.txt"));
+            for(int i = 0; i < vertices; i++){
+                for(int j = 0; j < vertices; j++){
+                    matriz[i][j] = entrada.nextInt();
+                }
+            }
+            System.out.println("Arquivo carregado");
+
+        }catch(Exception e ){
+            System.out.println(e.getMessage());
+        }
+                for (int i = 0; i < vertices; i++) {
+               for (int j = 0; j < vertices; j++) {
+                       System.out.print("[" + matriz[i][j] + "] " );
+                       }
+               System.out.println();
+               }
+        return matriz;
+}
+    
+    private static void conjuntoIndependente(int[][] matriz,int tamanho) {
+        int solucao = 0;
+        int vertice = 0;
+        int verticeAux = 0;
+        int alcanca = 0;
+        int auxAlcanca = 0;
+        for(int i = 0; i <matriz.length; i++){
+            for(int j = 0; j < matriz.length;j++){
+                if(i == 0){    
+                    if(matriz[i][j] == 1){
+                        alcanca++;
+                    }
+                   }
+                if(matriz[i][j] == 1){
+                    vertice = i;
+                    auxAlcanca++;
+                }  
+        }       
+            if(auxAlcanca > alcanca){
+                solucao = vertice;
+            }
+            auxAlcanca = 0;
+            verticeAux = 0;
+
+                System.out.println("Maior conexao é " + solucao);
+        }
+        ArrayList<Integer> conjIndependente = new ArrayList<>();
+        conjIndependente.add(solucao);
+        
+        
+    }
+        
+    
+    
+    public static void main(String[] args) {
+        int matriz[][];
+        matriz = null;
+      //  matriz= carregarGrafo();
+        matriz = carregarTxt();
+        conjuntoIndependente(matriz,matriz.length);
+    }    
+
+
+}
