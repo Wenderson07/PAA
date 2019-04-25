@@ -23,8 +23,8 @@ public class MergeSort {
        for(j=0;j<n2;j++){
 	   right[j] = a[q+j+1];
        }
-       left[n1]  = 100000;
-       right[n2] = 100000;
+       left[n1]  = Integer.MAX_VALUE;
+       right[n2] = Integer.MAX_VALUE;
        i = 0;
        j = 0;
        
