@@ -114,10 +114,15 @@ public class bckp {
 	public static void quickSort(int a[], int p, int r){
 	    if(p < r){
 		int q = partition(a,p,r);	
-		quickSort(a,p,q-1);			
-		quickSort(a,q+1,r);			
+		if(q-p <= r -q){
+		quickSort(a,p,q-1);
+		p = q +1;
+		}else{
+		quickSort(a,q+1,r);
+		r = q -1;
+		}
 	    }
-	    }
+	}
 	
 	//Conjunto heapSort
 	public static int esquerda(int i){
@@ -130,16 +135,18 @@ public class bckp {
 	    int maior;
 	    int e = esquerda(i);
 	    int d = direita(i);
+	    
+	    countHeap++;
 	    if(e <= n && a[e] > a[i])
 		maior = e;
 	    else
 		maior = i;
-
+		
+	    countHeap++;
 	    if(d <= n && a[d] > a[maior])
 		    maior = d;
 
 	    if(maior != i){
-		countHeap++;
 		a[i] = troca(a[maior],a[maior] = a[i]);
 		refazHeapMax(a,maior,n);
 	    }
@@ -151,10 +158,8 @@ public class bckp {
 	}
 	public static void heapSort(int a[]){
 	    constroiHeapMax(a, a.length-1);
-
 	    for(int i = a.length-1; i >= 0; i--){
 		a[0] = troca(a[i],a[i] = a[0]);
-		countHeap++;
 		refazHeapMax(a,0,i-1);
 	    }
 	}
@@ -218,7 +223,7 @@ public class bckp {
 	    long inicio,fim,tempo; //Para medir o tempo
 	    Scanner scan = new Scanner(System.in);
 	    int x,y,escolha; // Para for's e escolha do algoritmo de execução
-	    System.out.print("\n 0 - Sair\n 1 - Bubble Sort\n 2 - Insertion sort\n 3 - Merge Sort\n 4 - Qucik Sort\n 5 - Heap sort\n");
+	    System.out.print("\n 0 - Sair\n 1 - Bubble Sort\n 2 - Insertion sort\n 3 - Merge Sort\n 4 - Quick Sort\n 5 - Heap sort\n");
 	    escolha = scan.nextInt();
 
 	    while(escolha != 0){
@@ -456,7 +461,7 @@ public class bckp {
 			}
 			break;
 		}
-		System.out.print("\n 0 - Sair\n 1 - Bubble Sort\n 2 - Insertion sort\n 3 - Merge Sort\n 4 - Qucik Sort\n 5 - Heap sort");
+		System.out.print("\n 0 - Sair\n 1 - Bubble Sort\n 2 - Insertion sort\n 3 - Merge Sort\n 4 - Quick Sort\n 5 - Heap sort");
 		escolha = scan.nextInt();
 	    }
 	}
